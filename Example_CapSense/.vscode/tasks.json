@@ -1,0 +1,36 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "JLink_Power_Off",
+            "type": "shell",
+            "command": "${env:ONETHINX_PACK_LOC}/config/scripts/JlinkOnOff/JlinkOnOff off"
+        },
+        {
+            "label": "JLink_Power_On",
+            "type": "shell",
+            "command": "${env:ONETHINX_PACK_LOC}/config/scripts/JlinkOnOff/JlinkOnOff on"
+        },
+        {
+            "label": "UART Console",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceRoot}/build"
+            },
+            "windows": {
+                "command": "${env:ONETHINX_TOOLS_LOC}/comsniff",            // Nice tool from https://github.com/klarsys/comsniff
+                "args": ["-d 4","-b 19200"],                                 // -d portnum   -b baudrate
+            },
+            "linux": {
+                "command": "screen",
+                "args": ["/dev/tty.usbserial-A603TZRU","9600"]
+            },
+            "osx": {
+                "command": "screen",
+                "args": ["/dev/tty.usbserial-A603TZRU","19200"],
+            }
+        }
+    ]
+}
